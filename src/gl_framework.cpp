@@ -82,7 +82,7 @@ namespace csX75
 
   void cursorPositionCallback (GLFWwindow *window , double xPos , double yPos)
   {
-      camera1.update_cam_orientation(float(xPos) ,float(yPos) );
+      //camera1.update_cam_orientation(float(xPos) ,float(yPos) );
   }
 
 

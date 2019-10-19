@@ -4,7 +4,7 @@ in vec4 vPosition;
 in vec2 texCoord;
 //in vec3 vNormal;
 
-varying vec2 tex;
+out vec2 tex;
 
 // uniform mat4 uModelViewMatrix;
 // uniform mat3 normalMatrix;

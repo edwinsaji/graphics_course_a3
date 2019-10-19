@@ -51,7 +51,9 @@ void renderGL()
 
   // view_matrix = projection_matrix * lookat_matrix * rotation_matrix;
 
-  view_matrix = camera1.view_matrix;
+  view_matrix = camera1.projection_matrix * camera1.view_matrix;
+
+  //view_matrix = camera1.view_matrix;
 
 
   glUniformMatrix4fv(viewMatrix, 1, GL_FALSE, glm::value_ptr(view_matrix));
