@@ -3,7 +3,10 @@
 #include <cstdlib>
 #include "texture.hpp"
 
-GLuint LoadTexture( const char * filename, int width, int height )
+namespace csX75
+{
+
+GLuint LoadTexture( const char * filename, int width, int height , GLuint texture_enum)
 {
     GLuint texture;
     unsigned char header[54];// 54 Byte header of BMP
@@ -15,7 +18,7 @@ GLuint LoadTexture( const char * filename, int width, int height )
     
     file = fopen( filename, "rb" ); 
     if ( file == NULL )
-    { printf("File not found\n"); return 0; }  // if file is empty 
+    { printf("File %s not found\n",filename); return 0; }  // if file is empty 
     if (fread(header,1,54,file)!=54)
       {
 	printf("Incorrect BMP file\n");
@@ -39,7 +42,7 @@ GLuint LoadTexture( const char * filename, int width, int height )
     fread( data, size, 1, file ); // read the file
     fclose( file );
     //////////////////////////
-
+    glActiveTexture(GL_TEXTURE0 + texture_enum);
     glGenTextures( 1, &texture );
     glBindTexture( GL_TEXTURE_2D, texture );
     
@@ -62,3 +65,5 @@ void FreeTexture( GLuint texture )
 {
   glDeleteTextures( 1, &texture ); // delete the texture
 }
+
+};

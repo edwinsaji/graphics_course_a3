@@ -1,32 +1,10 @@
 #include "main.hpp"
 
-GLuint create_shader(std::string vertex_shader, std::string fragment_shader)
-{
-  // Load shaders and use the resulting shader program
-  // std::string vertex_shader_file("03_vshader.glsl");
-  // std::string fragment_shader_file("03_fshader.glsl");
-
-  std::string vertex_shader_file(vertex_shader);
-  std::string fragment_shader_file(fragment_shader);
-
-  std::vector<GLuint> shaderList;
-  shaderList.push_back(csX75::LoadShaderGL(GL_VERTEX_SHADER, vertex_shader_file));
-  shaderList.push_back(csX75::LoadShaderGL(GL_FRAGMENT_SHADER, fragment_shader_file));
-
-  return csX75::CreateProgramGL(shaderList);
-}
-
 
 void initBuffersGL()
 {
-  shaderProgram = create_shader("../src/vshader.glsl","../src/fshader.glsl");
-  glUseProgram( shaderProgram );
 
-  earth1.create_vertices(1.0f);
-  cam_radius = 1.001f;
-  earth1.init_buffers(shaderProgram);
-
-  viewMatrix = glGetUniformLocation( shaderProgram, "viewMatrix");
+  Scene.initialise();
 
 }
 
@@ -34,31 +12,7 @@ void renderGL()
 {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-  // glm::mat4 rotation_matrix;
-
-
-  // rotation_matrix = glm::rotate(glm::mat4(1.0f), glm::radians(xrot), glm::vec3(1.0f,0.0f,0.0f));
-  // rotation_matrix = glm::rotate(rotation_matrix, glm::radians(yrot), glm::vec3(0.0f,1.0f,0.0f));
-  // rotation_matrix = glm::rotate(rotation_matrix, glm::radians(zrot), glm::vec3(0.0f,0.0f,1.0f));
-
-  // glm::vec4 cam_pos(0.0f,0.0f,cam_radius,1.0f) ,cam_up(0.0f,1.0f,0.0f,1.0f) ;
-
-  // glm::mat4 lookat_matrix = glm::lookAt(glm::vec3(cam_pos),glm::vec3(0.0f),glm::vec3(cam_up));
-
-  // //glm::mat4 projection_matrix = glm::frustum(-2.0f,2.0f,-2.0f,2.0f,2.0f,9.0f); 
-  // //glm::mat4 projection_matrix = glm::ortho (-3.0f,3.0f,-3.0f,3.0f,-10.0f,10.0f);
-  // glm::mat4 projection_matrix = glm::perspective( glm::radians(80.0f) , 1.0f , 0.00001f , cam_radius + earth1.radius );
-
-  // view_matrix = projection_matrix * lookat_matrix * rotation_matrix;
-
-  view_matrix = camera1.projection_matrix * camera1.view_matrix;
-
-  //view_matrix = camera1.view_matrix;
-
-
-  glUniformMatrix4fv(viewMatrix, 1, GL_FALSE, glm::value_ptr(view_matrix));
-
-  earth1.draw();
+  Scene.draw();
 
   
 }
@@ -78,9 +32,9 @@ int main(int argc, char** argv)
   //! Initialize GLFW
   if (!glfwInit())
     return -1;
-  //We want OpenGL 4.0
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); 
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+  //We want OpenGL 4.4
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4); 
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
   //This is for MacOSX - can be omitted otherwise
   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); 
   //We don't want the old OpenGL 
@@ -93,6 +47,8 @@ int main(int argc, char** argv)
       glfwTerminate();
       return -1;
     }
+
+
   
   //! Make the window's context current 
   glfwMakeContextCurrent(window);
@@ -119,6 +75,13 @@ int main(int argc, char** argv)
 
   glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 
+
+  // get version info
+  const GLubyte* renderer = glGetString (GL_RENDERER); // get renderer string
+  const GLubyte* version = glGetString (GL_VERSION); // version as a string
+  std::cout<<"Renderer: "<<renderer<<std::endl;
+  std::cout<<"OpenGL version supported "<<version<<std::endl;
+
   //Initialize GL state
   csX75::initGL();
   initBuffersGL();
@@ -137,7 +100,7 @@ int main(int argc, char** argv)
 
       if ( currentTime - lastTime >= 1.0 ){ // If last prinf() was more than 1 sec ago
         // printf and reset timer
-        printf("%f ms/frame\n", 1000.0/double(nbFrames));
+        printf("\n %f ms/frame", 1000.0/double(nbFrames));
         nbFrames = 0;
         lastTime += 1.0;
       }

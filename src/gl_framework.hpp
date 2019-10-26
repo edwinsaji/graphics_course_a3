@@ -9,7 +9,7 @@
 #include <algorithm>
 // Define a helpful macro for handling offsets into buffer objects
 #define BUFFER_OFFSET( offset )   ((GLvoid*) (offset))
-#endif
+
 
 
 
@@ -39,4 +39,37 @@ namespace csX75
 #ifndef _GLM_VEC4_
 #define _GLM_VEC4_
 #include "glm/vec4.hpp"
+#endif
+
+
+
+
+#ifndef _VEC2_
+#define _VEC2_
+#include "glm/vec2.hpp"
+#endif
+
+#ifndef _VEC3_
+#define _VEC3_
+#include "glm/vec3.hpp"
+#endif
+
+
+#ifndef _MAT4X4_
+#define _MAT4X4_
+#include "glm/mat4x4.hpp"
+#endif
+
+
+#ifndef _MAT_TRANSFORM_
+#define _MAT_TRANSFORM_
+#include "glm/gtc/matrix_transform.hpp"
+#endif
+
+#ifndef _TYPE_PTR_
+#define _TYPE_PTR_
+#include "glm/gtc/type_ptr.hpp"
+#endif 
+
+
 #endif

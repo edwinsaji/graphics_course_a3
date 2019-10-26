@@ -1,11 +1,10 @@
 #include "gl_framework.hpp"
 
-#include "camera.hpp"
+#include "scene.hpp"
 
-extern GLfloat xrot,yrot,zrot;
-extern GLfloat cam_radius;
 
-extern FirstPersonCamera camera1;
+
+extern scene Scene;
 
 namespace csX75
 {
@@ -16,10 +15,15 @@ namespace csX75
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     //Set depth buffer furthest depth
     glClearDepth(1.0);
-    //Set depth test to less-than
-    glDepthFunc(GL_LESS);
-    //Enable depth testing
+    // //Set depth test to less-than
+    // glDepthFunc(GL_LESS);
+    // //Enable depth testing
+    // glEnable(GL_DEPTH_TEST);
+
     glEnable(GL_DEPTH_TEST);
+    glDepthMask(GL_TRUE);
+    glDepthFunc(GL_LEQUAL);
+    glDepthRange(0.0f, 1.0f);
   }
   
   //!GLFW Error Callback
@@ -62,17 +66,17 @@ namespace csX75
     //   cam_radius -= 0.1;
 
     else if(key == GLFW_KEY_SPACE)
-      camera1.update_cam_position(1);
+      Scene.Camera.update_cam_position(1);
     else if(key == GLFW_KEY_LEFT_CONTROL)
-      camera1.update_cam_position(-1);
+      Scene.Camera.update_cam_position(-1);
     else if(key == GLFW_KEY_D)
-      camera1.update_cam_position(2);
+      Scene.Camera.update_cam_position(2);
     else if(key == GLFW_KEY_A)
-      camera1.update_cam_position(-2);
+      Scene.Camera.update_cam_position(-2);
     else if(key == GLFW_KEY_W)
-      camera1.update_cam_position(3);
+      Scene.Camera.update_cam_position(3);
     else if(key == GLFW_KEY_S)
-      camera1.update_cam_position(-3);
+      Scene.Camera.update_cam_position(-3);
 
 
 
@@ -82,7 +86,7 @@ namespace csX75
 
   void cursorPositionCallback (GLFWwindow *window , double xPos , double yPos)
   {
-      //camera1.update_cam_orientation(float(xPos) ,float(yPos) );
+      Scene.Camera.update_cam_orientation(float(xPos) ,float(yPos) );
   }
 
 

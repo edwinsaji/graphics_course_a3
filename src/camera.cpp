@@ -82,6 +82,8 @@ void FirstPersonCamera::update_cam_matrix()
 
 	view_matrix = glm::lookAt( glm::vec3 (cam_pos) , lookat_point , glm::vec3(cam_up) );
 
+	view_matrix_without_cam_pos = glm::lookAt( glm::vec3 (0.0f,0.0f,0.0f) , glm::vec3(cam_front) , glm::vec3(cam_up) );
+
 	projection_matrix = glm::perspective( glm::radians(80.0f) , 1.0f , 0.00001f , 100.0f );
 
 	

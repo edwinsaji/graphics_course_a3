@@ -24,7 +24,8 @@ public:
 
 	float prev_time_orientation ,prev_time_position;
 
-	glm::mat4 projection_matrix , view_matrix;
+	glm::mat4 projection_matrix , view_matrix, view_matrix_without_cam_pos;
+
 
 	void update_cam_orientation(float xpos, float ypos);
 

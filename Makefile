@@ -9,8 +9,8 @@ CPPFLAGS=-I/usr/local/include -I./src/
 
 
 BIN=bin/a3view
-SRCS=src/main.cpp src/gl_framework.cpp src/earth.cpp src/texture.cpp src/shader_util.cpp src/camera.cpp
-INCLUDES=src/main.hpp src/gl_framework.hpp src/earth.hpp src/texture.hpp src/shader_util.hpp src/camera.hpp
+SRCS=src/main.cpp src/gl_framework.cpp src/earth.cpp src/texture.cpp src/shader_util.cpp src/camera.cpp src/matrices.cpp src/ONAS_state.cpp src/scene.cpp src/sky.cpp src/space.cpp
+INCLUDES=src/main.hpp src/gl_framework.hpp src/earth.hpp src/texture.hpp src/shader_util.hpp src/camera.hpp src/matrices.hpp src/ONAS_state.hpp src/scene.hpp src/sky.hpp src/space.hpp
 
 all: $(BIN)
 

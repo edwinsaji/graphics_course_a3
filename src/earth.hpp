@@ -1,43 +1,51 @@
-#ifndef _VEC2_
-#define _VEC2_
-#include "glm/vec2.hpp"
+
+#ifndef _ONAS_STATE_
+#define _ONAS_STATE_
+#include "ONAS_state.hpp"
 #endif
 
-#ifndef _VEC3_
-#define _VEC3_
-#include "glm/vec3.hpp"
+#ifndef _MVP_MATRICES_
+#define _MVP_MATRICES_
+#include "matrices.hpp"
 #endif
+
 
 #include "gl_framework.hpp"
 
-
-
+//to draw ground
 class earth
 {
 
 public:
-	//we shall make it with 
-	std::vector< glm::vec4 > vertices;
-	std::vector< glm::vec3 > normal;
-	std::vector< glm::vec2 > texture;
-	std::vector< unsigned int > indices;
+
+	std::vector< glm::vec4 > mesh;
+	std::vector< glm::vec3 > normals;
+	std::vector< glm::vec2 > texture_coord;
+
 
 	float radius;
 
-	unsigned int no_of_longs ,  no_of_lats;
+	std::vector<GLuint> vao, vbo;
 
-	GLuint vbo , vao , index , texture_id;
+	//Gluint surface_texture;
 
-	GLuint shaderProgram;
+	GLuint shader;
 
+	void create_mesh(int no_of_longs, int no_of_lats);
 
-	void create_vertices (float radius);
-	void init_buffers (GLuint _shaderProgram);
-	void draw (void);
+	void get_shaders(std::string vertex_shader, std::string fragment_shader);
+	
+	void init_buffers(void);
+	
+	void set_constant_uniforms(ONAS_state state);
 
-	earth()
+	void set_non_constant_uniforms(MVPmatrices set);
+
+	void draw(GLuint texture_enum);
+
+	earth(float radius)
 	{
-		no_of_lats = no_of_longs = 2000 ;
+		this->radius = radius;
 	}
 
 };
