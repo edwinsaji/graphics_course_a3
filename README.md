@@ -1,10 +1,1 @@
-assuming you are in top level directory.
-
-type these commands
-
-cd textures
-mogrify -format bmp highres.jpg
-cd ..
-make
-cd bin
-./a3view
+please ensure you are in the directory bin before running the binary.
